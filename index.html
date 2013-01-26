@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Dibattito Scienza</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <style>
+            body {
+                padding-top: 50px;
+                overflow: scroll;
+                overflow-x: hidden;
+            }
+            div.domanda p.testo {
+                font-size: 150%;
+                font-weight: bold;
+            }
+            div.domanda p.span1 {
+                font-size: 75%;
+                line-height: 120%;
+            }
+            p.span12 {
+                margin-left: 0 !important;
+            }
+            div.navbar-inner {
+                background: #098AC6;
+                background: -moz-linear-gradient(top, #098AC6 0%, #098AC6 15%, #055478 100%);
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#098AC6), color-stop(15%,#098AC6), color-stop(100%,#055478));
+                background: -webkit-linear-gradient(top, #098AC6 0%,#098AC6 15%,#055478 100%);
+                background: -o-linear-gradient(top, #098AC6 0%,#098AC6 15%,#055478 100%);
+                background: -ms-linear-gradient(top, #098AC6 0%, #098AC6 15%,#055478 100%);
+                filter: none;
+                background: linear-gradient(top, #098AC6 0%,#098AC6 15%,#055478 100%);
+            }
+            div.navbar a.brand {
+                color: white;
+                text-shadow: 0 -1px 0 black;
+            }
+            div.navbar a.home {
+                color: white;
+                text-shadow: 0 -1px 0 black;
+                font-family: "Nixie One","Helvetica Neue",Helvetica,Arial,sans-serif;
+                text-decoration: none;
+                text-transform: lowercase;
+                font-size: 20px;
+                font-weight: 200;
+                letter-spacing: 0;
+                text-align: left;
+                padding: 10px 20px 10px;
+            }
+            div.navbar img {
+                padding: 4px 0px 4px 10px;
+            }
+            div#intestazione > div > div {
+                display: inline-block;
+                vertical-align: middle;
+            }
+            div.carousel {
+                height: 327px; /* Dipende dalla presenza del video */
+            }
+            div.carousel-inner div.video {
+                text-align: center;
+            }
+            div.carousel-inner .itemimage, div.carousel-inner .itemtext {
+                vertical-align: middle;
+                display: inline-block;
+            }
+            div.item img {
+                max-height: 100%;
+                width: 25%;
+                margin-right: 20px;
+            }
+            div.item span {
+                font-size: 200%;
+                width: 70%;
+                line-height: 120%;
+                vertical-align: middle;
+            }
+            div.candidato {
+                padding: 10px;
+                border: solid 1px black;
+                border-radius: 10px;
+            }
+            div.candidato.selected {
+                background-color: red;
+            }
+            div.candidato p {
+                margin:0;
+            }
+            div.candidato .nome {
+                font-size: 120%;
+                font-weight: bold;
+            }
+            div.candidato img {
+                cursor: pointer;
+                border-radius: 10px;
+            }
+            div.candidato img.disabled {
+                filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+, Firefox on Android */
+                filter: gray; /* IE6-9 */
+                -webkit-filter: grayscale(100%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
+            }
+            div.risposte img {
+                width: 20%;
+                float: left;
+            }
+            img.social {
+                height: 2em;
+                float: right;
+            }
+            span.candidato {
+                float: left;
+                margin-right: 3ex;
+                font-style: italic;
+            }
+            .risposta span.testo, .risposta span.pretesto {
+                font-size: 85%;
+            }
+            .risposta span.more, .risposta span.social {
+                font-size: 75%;
+                float: right;
+                cursor: pointer;
+                text-decoration: underline;
+            }
+            .risposta .hidden {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <a class="brand" href="#">Le 10 domande ai candidati premier</a>
+                <a href="mailto: info@dibattitoscienza.it" rel="nofollow" target="_blank" class="pull-right">
+                    <img width="32px" height="32px" src="http://www.dibattitoscienza.it/wordpress/wp-content/plugins/social-media-widget/images/default/32/email.png" alt=" E-mail" title=" E-mail" style="opacity: 0.8; -moz-opacity: 0.8;" class="fade">
+                </a>
+                <a href="http://www.dibattitoscienza.it/feed/" rel="nofollow" target="_blank" class="pull-right">
+                    <img width="32px" height="32px" src="http://www.dibattitoscienza.it/wordpress/wp-content/plugins/social-media-widget/images/default/32/rss.png" alt=" RSS" title=" RSS" style="opacity: 0.8; -moz-opacity: 0.8;" class="fade" />
+                </a>
+                <a href="https://twitter.com/dibattitoscienz" rel="nofollow" target="_blank" class="pull-right">
+                    <img width="32px" height="32px" src="http://www.dibattitoscienza.it/wordpress/wp-content/plugins/social-media-widget/images/default/32/twitter.png" alt=" Twitter" title=" Twitter" style="opacity: 0.8; -moz-opacity: 0.8;" class="fade" />
+                </a>
+                <a href="https://www.facebook.com/groups/443640142366700/" rel="nofollow" target="_blank" class="pull-right">
+                    <img width="32px" height="32px" src="http://www.dibattitoscienza.it/wordpress/wp-content/plugins/social-media-widget/images/default/32/facebook.png" alt=" Facebook" title=" Facebook" style="opacity: 0.8; -moz-opacity: 0.8;" class="fade" />
+                </a>
+                <a class="home pull-right" href="http://www.dibattitoscienza.it/">Dibattito Scienza</a>
+            </div>
+        </div>
+        <div id="intestazione">
+            <div class="row-fluid">
+                <div class="span2"><img class="visible-desktop" src="img/dib_sc_logo.jpg"/></div>
+                <div class="span8">
+                    <div id="myCarousel" class="carousel slide">
+                        <!-- Carousel items loaded from Google Spreadsheet via TableTop.js and transparency.js -->
+                        <div class="carousel-inner">
+                            <div class="item">
+                                <img class="itemimage" />
+                                <span class="itemtext"></span>
+                            </div>
+                        </div>
+                        <!-- Carousel nav -->
+                        <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                        <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                    </div>
+                </div>
+                <div class="span2"><img class="visible-desktop" src="img/dib_sc_logo.jpg"/></div>
+            </div>
+        </div>
+        <div class="row-fluid hidden-phone candidati">
+            <div class="span2 candidato">
+                <!--<p class="nome"><p>-->
+                <img class="foto" />
+            </div>
+        </div>
+        </div>
+        <div class="row-fluid risposte">
+            <p class="span2 risposta">
+                <img class="visible-phone foto" />
+                <span class="candidato visible-phone"></span> <span class="pretesto"></span> <span class="testo hidden"></span>
+                <br><span class="more hidden">Continua a leggere...</span>
+                <span class="social hidden"><a class="tweet-text" target="_blank">Tweet!</a></span>
+            </p>
+        </div>
+        <script src="js/jquery-1.9.0.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="/libs/tabletop/master/src/tabletop.js"></script>
+        <script src="/libs/transparency/v0.7.5/lib/transparency.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                Tabletop.init( {
+                    key: "0Aqj_-GzOiSPsdDVSdHNudWhlYkh1cmctTU9VcG9kN3c",
+                    callback: function(d,tt) {
+
+                        var risposte = d.Risposte.all(),
+                            domande = d.Domande.all(),
+                            candidati = d.Candidati.all();
+
+
+                        var dirDomande = {
+                            itemimage: {
+                                src: function() {
+                                    return "img/" + this.immagine;
+                                }
+                            },
+                            itemtext: {
+                                text: function() {
+                                    return this.testo;
+                                },
+                                id: function() {
+                                    return this.id;
+                                }
+                            }
+                        };
+
+                        var dirCandidati = {
+                            /*nome: {
+                                text: function() {
+                                    return this.nome;
+                                }
+                            },*/
+                            foto: {
+                                src: function() {
+                                    return "img/" + this.immagine;
+                                },
+                                alt: function() {
+                                    return this.nome;
+                                },
+                                title: function() {
+                                    return this.nome;
+                                },
+                                id: function() {
+                                    return this.id + "Imm";
+                                }
+                            }
+                        };
+
+                        var dirRisposte = {
+                            risposta: {
+                                id: function() {
+                                    return this.id + "Ris";
+                                }
+                            },
+                            foto: {
+                                src: function() {
+                                    return "img/" + this.immagine;
+                                }
+                            },
+                            candidato: {
+                                text: function() {
+                                    return this.nome;
+                                }
+                            },
+                            "tweet-text": {
+                                href: function() { 
+                                    return "http://twitter.com/home/?status=%20%23polscienza2013 @" + this.twitter + " via @dibattitoscienz http://dataninja.it/projects/dibattito_scienza/";
+                                }
+                            }
+                        };
+                        
+                        $(".carousel-inner").render(domande,dirDomande);
+                        $(".carousel-inner").prepend('<div class="active item video"><iframe width="560" height="315" src="http://www.youtube.com/embed/oaIHvw66gAk?rel=0&wmode=transparent" frameborder="0"></iframe></div>');
+
+                        $(".candidati").render(candidati,dirCandidati);
+                        var idCandidato1,
+                            idCandidato2;
+                        $(".candidati img").click(function() {
+
+                            if ($(this).parent().hasClass("selected") && $(".selected").size() === 1) { // Dopo il click nessun candidato è selezionato
+
+                                idCandidato1 = $(this).attr("id").slice(0,-3);
+                                $(".disabled").removeClass("disabled");
+                                $(this).parent().removeClass("selected");
+
+                                $("#" + idCandidato1 + "Ris").slideUp(function() {
+
+                                    $("#" + idCandidato1 + "Ris .testo").addClass("hidden");
+                                    $("#" + idCandidato1 + "Ris .pretesto").removeClass("hidden");
+                                    $("#" + idCandidato1 + "Ris .more").removeClass("hidden");
+                                    $("#" + idCandidato1 + "Ris .social").addClass("hidden");
+
+                                    $("#" + idCandidato1 + "Ris")
+                                        .removeClass("span12")
+                                        .siblings()
+                                        .addBack()
+                                        .addClass("span2")
+                                        .slideDown();
+                                });
+
+                            } else if ($(this).parent().hasClass("selected") && $(".selected").size() === 2) { // Dopo il click c'è ancora un altro candidato selezionato
+
+                                idCandidato1 = $(this).attr("id").slice(0,-3);
+                                idCandidato2 = $(".selected").eq(0).children("img").attr("id").slice(0,-3) === idCandidato1 ? $(".selected").eq(1).children("img").attr("id").slice(0,-3) : $(".selected").eq(0).children("img").attr("id").slice(0,-3);
+                                $(this).parent().removeClass("selected");
+                                $(this).addClass("disabled");
+
+                                $("#" + idCandidato1 + "Ris, " + "#" + idCandidato2 + "Ris").slideUp(function() {
+                                    $(".span6").css("margin-left","");
+                                    $("#" + idCandidato1 + "Ris").removeClass("span6");
+                                    $("#" + idCandidato1 + "Ris .testo").addClass("hidden");
+                                    $("#" + idCandidato1 + "Ris .pretesto").removeClass("hidden");
+                                    $("#" + idCandidato1 + "Ris .more").removeClass("hidden");
+                                    $("#" + idCandidato1 + "Ris .social").addClass("hidden");
+                                    $("#" + idCandidato2 + "Ris").removeClass("span6").addClass("span12").slideDown();
+                                });
+
+                            } else if (!$(this).parent().hasClass("selected") && $(".selected").size() === 0) { // Primo selezionato
+
+                                idCandidato1 = $(this).attr("id").slice(0,-3);
+                                $(this).parent().addClass("selected");
+                                $("div.candidato img").not(this).addClass("disabled");
+
+                                $("#" + idCandidato1 + "Ris").siblings().addBack().slideUp(function() {
+                                    $("#" + idCandidato1 + "Ris")
+                                        .removeClass("span2")
+                                        .addClass("span12")
+                                        .siblings()
+                                        .removeClass("span2");
+
+                                    $("#" + idCandidato1 + "Ris .testo").removeClass("hidden");
+                                    $("#" + idCandidato1 + "Ris .pretesto").addClass("hidden");
+                                    $("#" + idCandidato1 + "Ris .more").addClass("hidden");
+                                    $("#" + idCandidato1 + "Ris .social").removeClass("hidden");
+                                    $("#" + idCandidato1 + "Ris").slideDown();
+                                });
+
+                            } else if (!$(this).parent().hasClass("selected") && $(".selected").size() === 1) { // Secondo selezionato
+
+                                idCandidato2 = $(this).attr("id").slice(0,-3);
+                                idCandidato1 = $(".selected").eq(0).children("img").attr("id").slice(0,-3) === idCandidato2 ? $(".selected").eq(1).children("img").attr("id").slice(0,-3) : $(".selected").eq(0).children("img").attr("id").slice(0,-3);
+                                $(this).parent().addClass("selected");
+                                $(this).removeClass("disabled");
+
+                                $("#" + idCandidato1 + "Ris").slideUp(function() {
+                                    $("#" + idCandidato2 + "Ris")
+                                        .removeClass("span2")
+                                        .addClass("span6");
+                                    $("#" + idCandidato1 + "Ris")
+                                        .removeClass("span12")
+                                        .addClass("span6");
+
+                                    $(".span6").eq(0).css("margin-left",0);
+    
+                                    $("#" + idCandidato2 + "Ris .testo").removeClass("hidden");
+                                    $("#" + idCandidato2 + "Ris .pretesto").addClass("hidden");
+                                    $("#" + idCandidato2 + "Ris .more").addClass("hidden");
+                                    $("#" + idCandidato2 + "Ris .social").removeClass("hidden");
+                                    $("#" + idCandidato2 + "Ris, " + "#" + idCandidato1 + "Ris").slideDown();
+                                });
+
+                            } else if (!$(this).parent().hasClass("selected") && $(".selected").size() === 2) {
+                                alert("È consentito selezionare al massimo due candidati!");
+                            }
+                        });
+
+                        $(".risposte").render(candidati,dirRisposte);
+                        var elRisposte = $("div.risposte .risposta");
+                        $("div.risposte .more").click(function() {
+                            var idCandidato = $(this).parent().attr("id").slice(0,-3);
+                            $("#" + idCandidato + "Imm").click();
+                        });
+
+
+                        $(".carousel").carousel({ interval: false });
+
+                        $(".carousel").bind("slide", function() {
+
+                            elRisposte.slideUp();
+
+                        }).bind("slid", function() {
+
+                            var idDomanda = $(".active .itemtext",this).attr("id");
+
+                            var risposta = $.grep(risposte, function(v,k) {
+                                return v.domanda == idDomanda;
+                            })[0];
+
+                            elRisposte.each(function() {
+                                var idCandidato = $(this).attr("id").slice(0,-3),
+                                    numCandSelected = $(".selected").size(),
+                                    textRisposta, preTextRisposta;
+
+                                textRisposta = risposta[idCandidato];
+                                preTextRisposta = risposta[idCandidato].match(/^[^\.]+\./);
+
+                                $(".pretesto",this).text(preTextRisposta);
+                                $(".testo",this).text(textRisposta);
+                                if (numCandSelected === 0) { 
+                                    $(".more",this).removeClass("hidden"); 
+                                }
+                                if (numCandSelected === 0 || !$(".testo",this).hasClass("hidden")) {
+                                    $(this).slideDown();
+                                }
+
+                            });
+                        });
+                    },
+                    simpleSheet: false
+                });
+            });
+        </script>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </body>
+</html>
