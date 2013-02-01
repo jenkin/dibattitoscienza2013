@@ -1,0 +1,9 @@
+<Files ~ "^\.(htaccess|htpasswd)$">
+deny from all
+</Files>
+AuthUserFile /home/dataninja/www/httpdocs/projects/dibattito_scienza/.htpasswd
+AuthGroupFile /dev/null
+AuthName "Dibattito Scienza"
+AuthType Basic
+require valid-user
+order deny,allow
