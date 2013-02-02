@@ -12,8 +12,8 @@
                 padding-top: 50px;
                 overflow: scroll;
                 overflow-x: hidden;
-                font-family: 'Ubuntu', sans-serif;
-                font-family: 'Kite One', sans-serif;
+                font-family: "Helvetica Neue", sans-serif;
+                /*font-family: 'Ubuntu', sans-serif;*/
                 font-weight: 400;
                 font-size: 16px;
                 max-width: 1280px;
@@ -65,12 +65,11 @@
             div.navbar img {
                 padding: 4px 0px 4px 10px;
             }
-            div#intestazione > div > div {
-                display: inline-block;
-                vertical-align: middle;
-            }
             div.carousel {
                 /*height: 327px;*/ /* Dipende dalla presenza del video */
+                font-family: 'Righteous', cursive;
+                font-size: 160%;
+                line-height: 110%;
             }
             div.carousel-inner div.video {
                 text-align: center;
@@ -85,30 +84,22 @@
                 margin-right: 20px;
             }
             div.item span {
-                font-family: 'Righteous', cursive;
-                font-size: 200%;
                 width: 70%;
-                line-height: 120%;
                 vertical-align: middle;
             }
             div.candidato {
-                padding: 10px;
                 border: solid 1px black;
                 border-radius: 10px;
                 position: relative;
             }
-            div.candidato.selected {
-                background-color: red;
+            div.candidato.selected, div.candidato.promosso:hover {
+                box-shadow: 0 0 15px black;
             }
             div.candidato p {
                 margin:0;
             }
-            div.candidato .nome {
-                font-size: 120%;
-                font-weight: bold;
-            }
             div.candidato img {
-                border-radius: 10px;
+                border-radius: 8px;
             }
             div.candidato.promosso img {
                 cursor: pointer;
@@ -126,18 +117,18 @@
             div.info > div {
                 padding: 10px;
             }
+            div.risposte {
+                font-family: 'Kite One', sans-serif;
+                font-weight: 400;
+                font-size: 16px;
+            }
             div.risposte img {
                 width: 20%;
                 /*float: left;*/
             }
-            img.social {
-                height: 2em;
-                float: right;
-            }
-            div.nome {
+            div.risposte .firma {
                 float: right;
                 margin-right: 3ex;
-                font-style: italic;
             }
             .risposta div.testo, .risposta div.pretesto {
                 font-size: 85%;
@@ -145,32 +136,62 @@
                 margin-top: 20px;
             }
             .risposta div.more {
+                font-family: "Helvetica Neue", sans-serif;
                 font-size: 75%;
                 float: right;
                 cursor: pointer;
                 text-decoration: underline;
             }
             .risposta div.social {
-                height: 32px;
+                font-family: "Helvetica Neue", sans-serif;
                 font-size: 75%;
-                float: right;
-                margin-top: 1em;
+                margin-top: 3em;
+                width: 100%;
+                text-align: center;
+                clear: right;
             }
             .risposta div.social * {
                 display: inline-block;
                 vertical-align: middle;
-                height: 32px;
-                width: auto;
+                /*height: 32px;
+                width: auto;*/
             }
             .risposta div.social span {
                 margin-right: 2em;
                 text-align: center;
             }
             .risposta div.social img {
-                margin-right: 1em;
+                margin-right: 0.5em;
+                width: auto;
+            }
+            .risposta div.social .mipiace {
+                vertical-align: text-bottom;
+            }
+            .risposta div.social .nonmipiace {
+                vertical-align: text-top;
+            }
+            .risposta div.social .tweet-text {
+                background-color: #DDD;
+                border-radius: 5px;
+                padding: 2px 10px;
+                box-shadow: 1px 1px 3px black;
+                font-weight: bold;
             }
             .risposta .hidden {
                 display: none;
+            }
+            div.cc {
+                font-size: 65%;
+                float: right;
+            }
+            div.up {
+                position: fixed;
+                bottom: 0;
+                right: 0;
+                width: 50px;
+                height: 50px;
+                background-image: url("img/up.png");
+                cursor: pointer;
             }
         </style>
     </head>
@@ -202,7 +223,7 @@
                 </a>
                 <span class="tw-button pull-right"><a href="https://twitter.com/share" class="twitter-share-button" data-related="dibattitoscienz" data-lang="it" data-size="large" data-count="horizontal" data-size="medium">Tweet</a></span>
                 <span class="fb-like pull-right" data-href="http://dataninja.it/projects/dibattito_scienza/" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false" data-font="verdana"></span>
-                <a class="home pull-right" href="http://www.dibattitoscienza.it/">Dibattito Scienza</a>
+                <a class="home pull-right" href="http://www.dibattitoscienza.it/" target="_blank">Dibattito Scienza</a>
             </div>
         </div>
         <div id="intestazione">
@@ -214,6 +235,7 @@
                         <div class="carousel-inner">
                             <div class="item">
                                 <img class="itemimage" />
+                                <span class="itemtitle" style="display:none;"></span>
                                 <span class="itemtext"></span>
                             </div>
                         </div>
@@ -227,7 +249,6 @@
         </div>
         <div class="row-fluid hidden-phone candidati">
             <div class="span2 candidato">
-                <!--<p class="nome"><p>-->
                 <img class="censored" />
                 <img class="foto" />
             </div>
@@ -251,23 +272,53 @@
                 <img class="visible-phone foto" />
                 <div class="pretesto"></div>
                 <div class="testo hidden"></div>
-                <div class="nome visible-phone"></div>
+                <div class="firma hidden"></div>
                 <div class="more hidden">Continua a leggere...</div>
                 <div class="social hidden">
                     <span class="template-mipiace" style="display:none;"></span>
-                    <span><img src="img/mipiace.png"><br><a class="tweet-text mipiace" target="_blank">Mi piace!</a></span>
+                    <span><img src="img/mipiace.png"> <a class="tweet-text mipiace" target="_blank">Mi piace!</a></span>
                     <span class="template-nonmipiace" style="display:none;"></span>
-                    <span><img src="img/nonmipiace.png"><br><a class="tweet-text nonmipiace" target="_blank">Non mi piace!</a></span>
-                    <span style="display:none;"><img src="img/preferisco.png"><br><a class="tweet-text preferisco" target="_blank">Lo preferisco all'altro!</a></span>
+                    <span><img src="img/nonmipiace.png"> <a class="tweet-text nonmipiace" target="_blank">Non mi piace!</a></span>
                 </div>
             </div>
         </div>
+
+        <hr>
+
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="cc">
+                    <p>
+                        <a href="http://creativecommons.org/licenses/by/3.0/it/" title="CC-BY 3.0" target="_blank">CC-BY 3.0</a>.
+                        Visualizzazione e grafica di Alessio Cimarelli (<a href="https://twitter.com/jenkin27" title="@jenkin27" target="_blank">@jenkin27</a>) | <a href="http://www.dataninja.it" title="Dataninja.it" target="_blank">dataninja.it</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="up" style="display:none;"></div>
+
         <script src="js/jquery-1.9.0.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="/libs/tabletop/master/src/tabletop.js"></script>
         <script src="/libs/transparency/v0.7.5/lib/transparency.min.js"></script>
         <script>
+
             $(document).ready(function() {
+
+                $(".up").click(function() {
+                    $("html, body").animate({ scrollTop: 0 }, "fast");
+                });
+
+                $(window).scroll(function() {
+                    var h = $(window).height(),
+                        y = $(window).scrollTop();
+                    if (y > h / 3) {
+                        $(".up").fadeIn();
+                    } else {
+                        $(".up").fadeOut();
+                    }
+                });
+
                 Tabletop.init( {
                     //key: "0Aqj_-GzOiSPsdDVSdHNudWhlYkh1cmctTU9VcG9kN3c", // Draft
                     key: "0Aqj_-GzOiSPsdEVCUVRkRU05d0NVWWlwdzRXbmxNU0E", // Official
@@ -284,6 +335,11 @@
                                     return "img/" + this.immagine;
                                 }
                             },
+                            itemtitle: {
+                                text: function() {
+                                    return this.titolo;
+                                }
+                            },
                             itemtext: {
                                 text: function() {
                                     return this.testo;
@@ -295,11 +351,6 @@
                         };
 
                         var dirCandidati = {
-                            /*nome: {
-                                text: function() {
-                                    return this.nome;
-                                }
-                            },*/
                             candidato: {
                                 class: function(p) {
                                     return p.value + " " + (parseInt(this.feedback) ? 'promosso' : 'bocciato');
@@ -337,24 +388,19 @@
                                     return "img/" + this.immagine;
                                 }
                             },
-                            candidato: {
+                            firma: {
                                 text: function() {
                                     return this.nome;
                                 }
                             },
                             "template-mipiace": {
-                                href: function() { 
-                                    return "http://twitter.com/home/?status=%20%23politiche2013 Mi piace @" + this.twitter + " su \"%domanda%\" di %23dibattitoscienza http://dataninja.it/projects/dibattito_scienza/ via @dibattitoscienz";
+                                text: function() { 
+                                    return "http://twitter.com/home/?status=%20%23dibattitoscienza %23politiche2013 Mi piace @" + this.twitter + " su \"%domanda%\" http://dataninja.it/projects/dibattito_scienza/ via @dibattitoscienz";
                                 }
                             },
                             "template-nonmipiace": {
-                                href: function() { 
-                                    return "http://twitter.com/home/?status=%20%23politiche2013 Non mi piace @" + this.twitter + " su \"%domanda%\" di %23dibattitoscienza http://dataninja.it/projects/dibattito_scienza/ via @dibattitoscienz";
-                                }
-                            },
-                            "preferisco": {
-                                href: function() { 
-                                    return "http://twitter.com/home/?status=%20%23politiche2013 Preferisco @" + this.twitter + " a @%candidato% su \"%domanda%\" di %23dibattitoscienza http://dataninja.it/projects/dibattito_scienza/ via @dibattitoscienz";
+                                text: function() { 
+                                    return "http://twitter.com/home/?status=%20%23dibattitoscienza %23politiche2013 Non mi piace @" + this.twitter + " su \"%domanda%\" http://dataninja.it/projects/dibattito_scienza/ via @dibattitoscienz";
                                 }
                             }
                         };
@@ -376,6 +422,7 @@
                                 $("#" + idCandidato1 + "Ris").slideUp(function() {
 
                                     $("#" + idCandidato1 + "Ris .testo").addClass("hidden");
+                                    $("#" + idCandidato1 + "Ris .firma").addClass("hidden");
                                     $("#" + idCandidato1 + "Ris .pretesto").removeClass("hidden");
                                     $("#" + idCandidato1 + "Ris .more").removeClass("hidden");
                                     $("#" + idCandidato1 + "Ris .social").addClass("hidden");
@@ -396,10 +443,10 @@
                                 $(this).addClass("disabled");
 
                                 $("#" + idCandidato1 + "Ris, " + "#" + idCandidato2 + "Ris").slideUp(function() {
-                                    $(".preferisco").hide();
                                     $(".span6").css("margin-left","");
                                     $("#" + idCandidato1 + "Ris").removeClass("span6");
                                     $("#" + idCandidato1 + "Ris .testo").addClass("hidden");
+                                    $("#" + idCandidato1 + "Ris .firma").addClass("hidden");
                                     $("#" + idCandidato1 + "Ris .pretesto").removeClass("hidden");
                                     $("#" + idCandidato1 + "Ris .more").removeClass("hidden");
                                     $("#" + idCandidato1 + "Ris .social").addClass("hidden");
@@ -420,6 +467,7 @@
                                         .removeClass("span2");
 
                                     $("#" + idCandidato1 + "Ris .testo").removeClass("hidden");
+                                    $("#" + idCandidato1 + "Ris .firma").removeClass("hidden");
                                     $("#" + idCandidato1 + "Ris .pretesto").addClass("hidden");
                                     $("#" + idCandidato1 + "Ris .more").addClass("hidden");
                                     $("#" + idCandidato1 + "Ris .social").removeClass("hidden");
@@ -434,7 +482,6 @@
                                 $(this).removeClass("disabled");
 
                                 $("#" + idCandidato1 + "Ris").slideUp(function() {
-                                    $(".preferisco").show();
                                     $("#" + idCandidato2 + "Ris")
                                         .removeClass("span2")
                                         .addClass("span6");
@@ -445,6 +492,7 @@
                                     $(".span6").eq(0).css("margin-left",0);
     
                                     $("#" + idCandidato2 + "Ris .testo").removeClass("hidden");
+                                    $("#" + idCandidato2 + "Ris .firma").removeClass("hidden");
                                     $("#" + idCandidato2 + "Ris .pretesto").addClass("hidden");
                                     $("#" + idCandidato2 + "Ris .more").addClass("hidden");
                                     $("#" + idCandidato2 + "Ris .social").removeClass("hidden");
@@ -455,8 +503,6 @@
                                 alert("È consentito selezionare al massimo due candidati!");
                             }
                         };
-
-                        //$(".candidato.promosso img.foto").click(clickOnCandidatoHandler);
 
                         $(".risposte").render(candidati,dirRisposte);
                         var elRisposte = $("div.risposte .risposta");
@@ -475,7 +521,8 @@
 
                         }).bind("slid", function() {
 
-                            var idDomanda = $(".active .itemtext",this).attr("id");
+                            var idDomanda = $(".active .itemtext",this).attr("id"),
+                                titleDomanda = $(".active .itemtitle",this).text();
 
                             var risposta = $.grep(risposte, function(v,k) {
                                 return v.domanda == idDomanda;
@@ -523,7 +570,9 @@
 
                                     $(".pretesto",this).html(preTextRisposta);
                                     $(".testo",this).html(textRisposta);
-                                    //$("a.mipiace",this).attr("href",$(".template-mipiace").text().replace(/
+
+                                    $("a.mipiace",this).attr("href", $(".template-mipiace",this).text().replace("%domanda%", titleDomanda));
+                                    $("a.nonmipiace",this).attr("href", $(".template-nonmipiace",this).text().replace("%domanda%", titleDomanda));
 
                                     if (numCandSelected === 0) { 
                                         $(".more",this).removeClass("hidden"); 
