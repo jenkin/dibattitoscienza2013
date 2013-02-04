@@ -5,31 +5,26 @@
         <title>Dibattito Scienza</title>
         <link href='http://fonts.googleapis.com/css?family=Kite+One' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
-        <!--<link href='http://fonts.googleapis.com/css?family=Ubuntu:400,500' rel='stylesheet' type='text/css'>-->
+        <!--<link href='http://fonts.googleapis.com/css?family=Junge' rel='stylesheet' type='text/css'>-->
+        <!--<link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>-->
         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
         <style>
+            /* Generale */
             body {
-                padding-top: 50px;
+                /*padding-top: 50px;*/
                 overflow: scroll;
                 overflow-x: hidden;
                 font-family: "Helvetica Neue", sans-serif;
-                /*font-family: 'Ubuntu', sans-serif;*/
                 font-weight: 400;
                 font-size: 16px;
                 max-width: 1280px;
                 margin: auto;
             }
-            div.domanda p.testo {
-                font-size: 150%;
-                font-weight: bold;
-            }
-            div.domanda p.span1 {
-                font-size: 75%;
-                line-height: 120%;
-            }
             div.span12 {
                 margin-left: 0 !important;
             }
+
+            /* Barra del titolo */
             div.navbar-inner {
                 background: #098AC6;
                 background: -moz-linear-gradient(top, #098AC6 0%, #098AC6 15%, #055478 100%);
@@ -47,7 +42,7 @@
             div.navbar a.home {
                 color: white;
                 text-shadow: 0 -1px 0 black;
-                font-family: "Nixie One","Helvetica Neue",Helvetica,Arial,sans-serif;
+                font-family: "Helvetica Neue", sans-serif;
                 text-decoration: none;
                 text-transform: lowercase;
                 font-size: 20px;
@@ -65,9 +60,10 @@
             div.navbar img {
                 padding: 4px 0px 4px 10px;
             }
+
+            /* Slider delle domande */
             div.carousel {
-                /*height: 327px;*/ /* Dipende dalla presenza del video */
-                font-family: 'Righteous', cursive;
+                font-family: "Righteous", sans-serif;
                 font-size: 160%;
                 line-height: 110%;
             }
@@ -78,15 +74,33 @@
                 vertical-align: middle;
                 display: inline-block;
             }
-            div.item img {
+            div.carousel-inner .itemimage {
                 max-height: 100%;
                 width: 25%;
-                margin-right: 20px;
+                margin-right: 10px;
             }
-            div.item span {
+            div.carousel-inner .itemtext {
                 width: 70%;
-                vertical-align: middle;
             }
+            @media (max-width:979px) {
+                div.carousel {
+                    font-size: 120%;
+                }
+                div.carousel-inner .itemtext {
+                    width: 80%;
+                }
+                div.carousel-inner .itemimage {
+                    width: 10%;
+                }
+            }
+            img.flyer.sx {
+                margin-left: 10px;
+            }
+            img.flyer.dx {
+                margin-left: -8px;
+            }
+
+            /* Foto dei candidati */
             div.candidato {
                 border: solid 1px black;
                 border-radius: 10px;
@@ -104,27 +118,41 @@
             div.candidato.promosso img {
                 cursor: pointer;
             }
-            div.candidato img.censored {
+            div.candidato img.norisposta {
                 position: absolute;
                 z-index: 10;
-                width: 88%;
+                width: 100%;
             }
-            div.candidato.bocciato img.foto, div.candidato img.disabled {
+            div.candidato.bocciato img.foto, div.risposta.bocciato img.foto, div.candidato img.disabled {
                 filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+, Firefox on Android */
                 filter: gray; /* IE6-9 */
                 -webkit-filter: grayscale(100%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
             }
+
+            /* Blocco delle informazioni iniziali */
             div.info > div {
                 padding: 10px;
             }
+
+            /* Blocco delle risposte */
             div.risposte {
-                font-family: 'Kite One', sans-serif;
+                font-family: "Kite One", serif;
                 font-weight: 400;
                 font-size: 16px;
             }
-            div.risposte img {
-                width: 20%;
-                /*float: left;*/
+            div.risposta img {
+                width: 50%;
+                border-radius: 8px;
+                margin: auto;
+            }
+            div.risposta.promosso img {
+                cursor: pointer;
+            }
+            div.risposta.promosso img:hover {
+                box-shadow: 0 0 15px black;
+            }
+            div.risposte p.norisposta {
+                font-family: "Helvetica Neue", sans-serif;
             }
             div.risposte .firma {
                 float: right;
@@ -141,9 +169,14 @@
             .risposta div.more {
                 font-family: "Helvetica Neue", sans-serif;
                 font-size: 75%;
-                float: right;
+                text-align: right;
                 cursor: pointer;
                 text-decoration: underline;
+            }
+            @media (max-width: 767px) {
+                .risposta div.more {
+                    display: none !important;
+                }
             }
             .risposta div.social {
                 font-family: "Helvetica Neue", sans-serif;
@@ -180,22 +213,36 @@
                 box-shadow: 1px 1px 3px black;
                 font-weight: bold;
             }
-            .risposta .hidden {
+            .hidden {
                 display: none;
             }
+
+            /* Footer con il copyleft */
             div.cc {
                 font-size: 65%;
+                border-top: solid 1px #eee;
+                margin-top: 5em;
+            }
+            div.cc p {
                 float: right;
             }
+
+            /* Frecce di scrolling in alto */
             div.up {
                 position: fixed;
                 bottom: 0;
-                right: 0;
                 width: 50px;
                 height: 50px;
                 background-image: url("img/up.png");
                 cursor: pointer;
             }
+            div.up.sx {
+                left: 0;
+            }
+            div.up.dx {
+                right: 0;
+            }
+
         </style>
     </head>
     <body>
@@ -209,7 +256,7 @@
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
         </script>
-        <div class="navbar navbar-fixed-top">
+        <div class="navbar">
             <div class="navbar-inner">
                 <a class="brand" href="#">Le 10 domande ai candidati premier</a>
                 <a href="mailto: info@dibattitoscienza.it" rel="nofollow" target="_blank" class="pull-right">
@@ -224,14 +271,14 @@
                 <a href="https://www.facebook.com/groups/443640142366700/" rel="nofollow" target="_blank" class="pull-right">
                     <img width="32px" height="32px" src="http://www.dibattitoscienza.it/wordpress/wp-content/plugins/social-media-widget/images/default/32/facebook.png" alt=" Facebook" title=" Facebook" style="opacity: 0.8; -moz-opacity: 0.8;" class="fade" />
                 </a>
-                <span class="tw-button pull-right"><a href="https://twitter.com/share" class="twitter-share-button" data-related="dibattitoscienz" data-lang="it" data-size="large" data-count="horizontal" data-size="medium">Tweet</a></span>
-                <span class="fb-like pull-right" data-href="http://dataninja.it/projects/dibattito_scienza/" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false" data-font="verdana"></span>
+                <span class="tw-button pull-right"><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://dataninja.it/dibattitoscienza" data-related="dibattitoscienz:Dibattito Scienza" data-lang="it" data-size="large" data-count="horizontal" data-size="medium">Tweet</a></span>
+                <span class="fb-like pull-right" data-href="http://dataninja.it/dibattitoscienza" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false" data-font="verdana"></span>
                 <a class="home pull-right" href="http://www.dibattitoscienza.it/" target="_blank">Dibattito Scienza</a>
             </div>
         </div>
         <div id="intestazione">
             <div class="row-fluid">
-                <div class="span2"><img class="visible-desktop" src="img/dib_sc_logo.jpg"/></div>
+                <div class="span2"><img class="visible-desktop flyer sx" src="img/dib_sc_logo.jpg"/></div>
                 <div class="span8">
                     <div id="myCarousel" class="carousel slide">
                         <!-- Carousel items loaded from Google Spreadsheet via TableTop.js and transparency.js -->
@@ -247,26 +294,21 @@
                         <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
                     </div>
                 </div>
-                <div class="span2"><img class="visible-desktop" src="img/dib_sc_logo.jpg"/></div>
+                <div class="span2"><img class="visible-desktop flyer dx" src="img/dib_sc_logo.jpg"/></div>
             </div>
         </div>
         <div class="row-fluid hidden-phone candidati">
             <div class="span2 candidato">
-                <img class="censored" />
+                <img class="norisposta" />
                 <img class="foto" />
             </div>
         </div>
 
         <div class="row-fluid info">
             <div class="span12">
-                <p>Il sito Dibattito Scienza nasce da un gruppo Facebook con lo stesso nome che, partito pochi giorni prima delle primarie del centro sinistra, è riuscito ad aggregare oltre mille tra ricercatori, insegnanti, giornalisti, docenti universitari, blogger e semplici cittadini, accomunati da un forte interesse per l’interazione tra scienza e politica nel senso più nobile del termine. Dalla collaborazione di queste persone sono nate sei domande su temi scientifici che sono state
-                sottoposte ai cinque candidati, i quali hanno tutti risposto, dimostrando che la sensibilità verso questi temi incomincia a crescere anche da noi e trova spazio nell’agenda politica.</p>
-
-                <p>Il sito – come il gruppo – vuole replicare in Italia l’esperienza di Science Debate, l’iniziativa americana che da anni invita i candidati alla Presidenza degli Stati Uniti a esprimere il proprio punto di vista su temi legati alla scienza, alla tecnologia e alle politiche della ricerca. Dal cambiamento climatico alle politiche sanitarie, dalle questioni di bioetica alle mappe sismiche, fino ai piani energetici, negli anni a venire la politica dovrà elaborare programmi
-                per affrontare problemi che richiedono solide competenze scientifiche e capacità di adottare decisioni razionali e competenti, non dettate dalla convenienza personale o dalla ricerca del consenso. Il fine ultimo della nostra iniziativa è dunque far entrare nel dibattito politico l’approccio razionale alla risoluzione di alcuni problemi, tipico della ricerca scientifica, attraverso domande mirate e specifiche ai candidati delle prossime elezioni politiche ed eventualmente
-                delle primarie, per quei partiti o movimenti che le adotteranno. Le domande saranno formulate da tutti coloro che vogliono contribuire al dibattito, e tratteranno i temi propri della scienza.</p>
-
-                <p>Dibattito Scienza rimarrà in attività anche dopo le elezioni, come “sentinella delle promesse” o delle dichiarazioni dei politici, in modo da aggregare i ricercatori, i comunicatori e chiunque voglia intervenire, e dare loro strumenti per l’interpretazione della realtà politica lontani dal chiacchiericcio quotidiano.</p>
+                <p>Il sito <a href="http://www.dibattitoscienza.it/" title="Dibattito Scienza" target="_blank">Dibattito Scienza</a> nasce da un <a href="https://www.facebook.com/groups/443640142366700/" title="Dibattito Scienza su Facebook" target="_blank">gruppo Facebook</a> con lo stesso nome che, partito pochi giorni prima delle primarie del centro sinistra, è riuscito ad aggregare oltre mille tra ricercatori, insegnanti, giornalisti, docenti universitari, blogger e semplici cittadini, accomunati da un forte interesse per l'interazione tra scienza e politica nel senso più nobile del termine. Dalla collaborazione di queste persone sono nate sei domande su temi scientifici che sono state sottoposte ai cinque candidati delle primarie, i quali hanno tutti risposto, dimostrando che la sensibilità verso questi temi incomincia a crescere anche da noi e trova spazio nell'agenda politica.</p>
+                <p>Il sito – come il gruppo – vuole replicare in Italia l'esperienza di <a href="http://sciencedebate.org/" title="Science Debate" target="_blank">Science Debate</a>, l'iniziativa americana che da anni invita i candidati alla Presidenza degli Stati Uniti a esprimere il proprio punto di vista su temi legati alla scienza, alla tecnologia e alle politiche della ricerca. Dal cambiamento climatico alle politiche sanitarie, dalle questioni di bioetica alle mappe sismiche, fino ai piani energetici, negli anni a venire la politica dovrà elaborare programmi per affrontare problemi che richiedono solide competenze scientifiche e capacità di adottare decisioni razionali e competenti, non dettate dalla convenienza personale o dalla ricerca del consenso.</p>
+                <p>Il fine ultimo della nostra iniziativa è dunque far entrare nel dibattito politico l'approccio razionale alla risoluzione di alcuni problemi, tipico della ricerca scientifica, attraverso domande mirate e specifiche ai candidati delle prossime elezioni politiche. Dibattito Scienza rimarrà in attività anche dopo le elezioni, come &quot;sentinella delle promesse&quot; o delle dichiarazioni dei politici, in modo da aggregare i ricercatori, i comunicatori e chiunque voglia intervenire, e dare loro strumenti per l'interpretazione della realtà politica lontani dal chiacchiericcio quotidiano.</p>
             </div>
         </div>
 
@@ -286,19 +328,17 @@
             </div>
         </div>
 
-        <hr>
-
         <div class="row-fluid">
-            <div class="span12">
-                <div class="cc">
-                    <p>
-                        <a href="http://creativecommons.org/licenses/by/3.0/it/" title="CC-BY 3.0" target="_blank">CC-BY 3.0</a>.
-                        Visualizzazione e grafica di Alessio Cimarelli (<a href="https://twitter.com/jenkin27" title="@jenkin27" target="_blank">@jenkin27</a>) | <a href="http://www.dataninja.it" title="Dataninja.it" target="_blank">dataninja.it</a></p>
-                </div>
+            <div class="span12 cc">
+                <p>
+                    <a href="http://creativecommons.org/licenses/by/3.0/it/" title="CC-BY 3.0" target="_blank">CC-BY 3.0</a>.
+                    Visualizzazione e grafica di Alessio Cimarelli (<a href="https://twitter.com/jenkin27" title="@jenkin27" target="_blank">@jenkin27</a>) | <a href="http://www.dataninja.it" title="Dataninja.it" target="_blank">dataninja.it</a>
+                </p>
             </div>
         </div>
 
-        <div class="up" title="Torna su" style="display:none;"></div>
+        <div class="up dx" title="Torna su" style="display:none;"></div>
+        <div class="up sx" title="Torna su" style="display:none;"></div>
 
         <script src="js/jquery-1.9.0.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
@@ -359,9 +399,18 @@
                                     return p.value + " " + (parseInt(this.feedback) ? 'promosso' : 'bocciato');
                                 }
                             },
-                            censored: {
+                            norisposta: {
                                 src: function() {
-                                    return (parseInt(this.feedback) ? '' : 'img/censored.png');
+                                    return (parseInt(this.feedback) ? '' : 'img/nessuna_risposta.png');
+                                },
+                                alt: function() {
+                                    return (parseInt(this.feedback) ? '' : this.nome);
+                                },
+                                title: function() {
+                                    return (parseInt(this.feedback) ? '' : this.nome);
+                                },
+                                class: function(p) {
+                                    return p.value + (parseInt(this.feedback) ? ' hidden' : '');
                                 }
                             },
                             foto: {
@@ -384,11 +433,23 @@
                             risposta: {
                                 id: function() {
                                     return this.id + "Ris";
+                                },
+                                class: function(p) {
+                                    return p.value + " " + (parseInt(this.feedback) ? 'promosso' : 'bocciato');
                                 }
                             },
                             foto: {
                                 src: function() {
                                     return "img/" + this.immagine;
+                                },
+                                alt: function() {
+                                    return this.nome;
+                                },
+                                title: function() {
+                                    return this.nome;
+                                },
+                                id: function() {
+                                    return this.id + "Imm";
                                 }
                             },
                             firma: {
@@ -398,19 +459,19 @@
                             },
                             "template-mipiace": {
                                 text: function() { 
-                                    return "http://twitter.com/home/?status=%20%23dibattitoscienza %23politiche2013 Mi piace @" + this.twitter + " su \"%domanda%\" http://dataninja.it/projects/dibattito_scienza/ via @dibattitoscienz";
+                                    return "http://twitter.com/home/?status=%20%23dibattitoscienza %23politiche2013 Mi piace @" + this.twitter + " su \"%domanda%\" http://dataninja.it/dibattitoscienza via @dibattitoscienz";
                                 }
                             },
                             "template-nonmipiace": {
                                 text: function() { 
-                                    return "http://twitter.com/home/?status=%20%23dibattitoscienza %23politiche2013 Non mi piace @" + this.twitter + " su \"%domanda%\" http://dataninja.it/projects/dibattito_scienza/ via @dibattitoscienz";
+                                    return "http://twitter.com/home/?status=%20%23dibattitoscienza %23politiche2013 Non mi piace @" + this.twitter + " su \"%domanda%\" http://dataninja.it/dibattitoscienza via @dibattitoscienz";
                                 }
                             }
                         };
                         
                         $(".carousel-inner").render(domande,dirDomande);
                         //$(".carousel-inner").prepend('<div class="active item video"><iframe width="560" height="315" src="http://www.youtube.com/embed/oaIHvw66gAk?rel=0&wmode=transparent" frameborder="0"></iframe></div>');
-                        $(".carousel-inner").prepend('<div class="active item"><img class="itemimage" src="img/interrobang.gif" /> <span class="itemtext">Scorri le dieci domande mediante lo slider e seleziona un candidato per leggerne le risposte complete. Selezionane due per confrontare direttamente le loro posizioni. Esprimi la tua opinione twittando i candidati o con l\'hashtag #dibattitoscienza</span></div>');
+                        $(".carousel-inner").prepend('<div class="active item"><img class="itemimage" src="img/interrobang.gif" /> <span class="itemtext">Scorri le dieci domande mediante lo slider e seleziona un candidato per leggerne le risposte complete. Selezionane due per confrontare direttamente le loro posizioni. Esprimi la tua opinione twittando i candidati con l\'hashtag #dibattitoscienza</span></div>');
 
                         $(".candidati").render(candidati,dirCandidati);
                         var idCandidato1,
@@ -555,21 +616,21 @@
                                     });
                                 });
 
-                                $(".candidato.promosso img.foto").off("click");
+                                $(".candidato.promosso img.foto, .risposta.promosso img.foto").off("click");
                                 $("div.info").slideDown();
 
                             } else {
 
-                                $(".candidato.promosso img.foto").off("click");
-                                $(".candidato.promosso img.foto").on("click",clickOnCandidatoHandler);
+                                $(".candidato.promosso img.foto, .risposta.promosso img.foto").off("click");
+                                $(".candidato.promosso img.foto, .risposta.promosso img.foto").on("click",clickOnCandidatoHandler);
 
                                 elRisposte.each(function() {
                                     var idCandidato = $(this).attr("id").slice(0,-3),
                                         numCandSelected = $(".selected").size(),
                                         textRisposta, preTextRisposta;
 
-                                    textRisposta = '<p>' + risposta[idCandidato].replace(/\n+/g,'</p><p>') + '</p>';
-                                    preTextRisposta = '<p>' + risposta[idCandidato].match(/^[^\.]+\./) + '</p>';
+                                    textRisposta = (risposta[idCandidato] === '' ? '<p class="norisposta">Nessuna risposta.</p>' : '<p>' + risposta[idCandidato].replace(/\n+/g,'</p><p>') + '</p>');
+                                    preTextRisposta = (risposta[idCandidato] === '' ? '<p class="norisposta">Nessuna risposta.</p>' : '<p>' + risposta[idCandidato].match(/^[^\.]+\./) + '</p>');
 
                                     $(".pretesto",this).html(preTextRisposta);
                                     $(".testo",this).html(textRisposta);
@@ -577,7 +638,7 @@
                                     $("a.mipiace",this).attr("href", $(".template-mipiace",this).text().replace("%domanda%", titleDomanda));
                                     $("a.nonmipiace",this).attr("href", $(".template-nonmipiace",this).text().replace("%domanda%", titleDomanda));
 
-                                    if (numCandSelected === 0) { 
+                                    if (numCandSelected === 0 && risposta[idCandidato] !== '') { 
                                         $(".more",this).removeClass("hidden"); 
                                     }
                                     if (numCandSelected === 0 || !$(".testo",this).hasClass("hidden")) {
