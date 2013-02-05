@@ -2,11 +2,12 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Dibattito Scienza</title>
+        <title>Dibattito Scienza: le risposte dei candidati #dibattitoscienza</title>
         <link href='http://fonts.googleapis.com/css?family=Kite+One' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
         <!--<link href='http://fonts.googleapis.com/css?family=Junge' rel='stylesheet' type='text/css'>-->
         <!--<link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>-->
+        <link rel="image_src" href="img/dib_sc_logo.jpg" />
         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
         <style>
             /* Generale */
@@ -147,10 +148,10 @@
                 border-radius: 8px;
                 margin: auto;
             }
-            div.risposta.promosso img {
+            div.risposta.promosso img.foto {
                 cursor: pointer;
             }
-            div.risposta.promosso img:hover {
+            div.risposta.promosso img.foto:hover {
                 box-shadow: 0 0 15px black;
             }
             div.risposte p.norisposta {
@@ -289,8 +290,8 @@
                 <a href="https://www.facebook.com/groups/443640142366700/" rel="nofollow" target="_blank" class="pull-right">
                     <img width="32px" height="32px" src="http://www.dibattitoscienza.it/wordpress/wp-content/plugins/social-media-widget/images/default/32/facebook.png" alt=" Facebook" title=" Facebook" style="opacity: 0.8; -moz-opacity: 0.8;" class="fade" />
                 </a>
-                <span class="tw-button pull-right"><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://dataninja.it/dibattitoscienza" data-related="dibattitoscienz:Dibattito Scienza" data-lang="it" data-size="large" data-count="horizontal" data-size="medium">Tweet</a></span>
-                <span class="fb-like pull-right" data-href="http://dataninja.it/dibattitoscienza" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false" data-font="verdana"></span>
+                <span class="tw-button pull-right"><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.dibattitoscienza.it/elezioni-2013-le-risposte-dei-politici/" data-related="dibattitoscienz:Dibattito Scienza" data-lang="it" data-size="large" data-count="horizontal" data-size="medium">Tweet</a></span>
+                <span class="fb-like pull-right" data-href="http://www.dibattitoscienza.it/elezioni-2013-le-risposte-dei-politici/" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false" data-font="verdana"></span>
                 <a class="home pull-right visible-desktop" href="http://www.dibattitoscienza.it/" target="_blank">Dibattito Scienza</a>
             </div>
         </div>
@@ -339,9 +340,9 @@
                 <div class="more hidden">Continua a leggere...</div>
                 <div class="social hidden">
                     <span class="template-mipiace" style="display:none;"></span>
-                    <span><img src="img/mipiace.png"> <a class="tweet-text mipiace" target="_blank">Mi piace!</a></span>
+                    <span><img src="img/mipiace2.png" title="Twitter bird by shizm.deviantart.com (orig)"> <a class="tweet-text mipiace" target="_blank">Mi piace!</a></span>
                     <span class="template-nonmipiace" style="display:none;"></span>
-                    <span><img src="img/nonmipiace.png"> <a class="tweet-text nonmipiace" target="_blank">Non mi piace!</a></span>
+                    <span><img src="img/nonmipiace2.png" title="Twitter bird by shizm.deviantart.com (mod)"> <a class="tweet-text nonmipiace" target="_blank">Non mi piace!</a></span>
                 </div>
             </div>
         </div>
@@ -349,7 +350,8 @@
         <div class="row-fluid">
             <div class="span12 cc">
                 <p>
-                    <a href="http://creativecommons.org/licenses/by/3.0/it/" title="CC-BY 3.0" target="_blank">CC-BY 3.0</a>.
+                <a href="http://creativecommons.org/licenses/by/3.0/it/" title="CC-BY 3.0" target="_blank">CC-BY 3.0</a> (<a href="https://docs.google.com/spreadsheet/pub?key=0Aqj_-GzOiSPsdEVCUVRkRU05d0NVWWlwdzRXbmxNU0E&output=html" title="Sorgente dati" target="_blank">sorgente dati</a>, <a href="http://www.lescienze.it/news/2013/02/04/news/elezioni_politiche_risposte_scienza_ricerca_2013-1479937/" title="Testo semplice" target="_blank">testo semplice</a>, <a
+                    href="RisposteDS.pdf" title="pdf" target="_blank">pdf</a>) | 
                     Visualizzazione e grafica di Alessio Cimarelli (<a href="https://twitter.com/jenkin27" title="@jenkin27" target="_blank">@jenkin27</a>) | <a href="http://www.dataninja.it" title="Dataninja.it" target="_blank">dataninja.it</a>
                 </p>
             </div>
@@ -477,19 +479,19 @@
                             },
                             "template-mipiace": {
                                 text: function() { 
-                                    return "http://twitter.com/home/?status=%20%23dibattitoscienza %23politiche2013 Mi piace @" + this.twitter + " su \"%domanda%\" http://dataninja.it/dibattitoscienza via @dibattitoscienz";
+                                    return "http://twitter.com/home/?status=%20%23dibattitoscienza %23politiche2013 Mi piace @" + this.twitter + " su \"%domanda%\" http://www.dibattitoscienza.it/elezioni-2013-le-risposte-dei-politici/ via @dibattitoscienz";
                                 }
                             },
                             "template-nonmipiace": {
                                 text: function() { 
-                                    return "http://twitter.com/home/?status=%20%23dibattitoscienza %23politiche2013 Non mi piace @" + this.twitter + " su \"%domanda%\" http://dataninja.it/dibattitoscienza via @dibattitoscienz";
+                                    return "http://twitter.com/home/?status=%20%23dibattitoscienza %23politiche2013 Non mi piace @" + this.twitter + " su \"%domanda%\" http://www.dibattitoscienza.it/elezioni-2013-le-risposte-dei-politici/ via @dibattitoscienz";
                                 }
                             }
                         };
                         
                         $(".carousel-inner").render(domande,dirDomande);
                         //$(".carousel-inner").prepend('<div class="active item video"><iframe width="560" height="315" src="http://www.youtube.com/embed/oaIHvw66gAk?rel=0&wmode=transparent" frameborder="0"></iframe></div>');
-                        $(".carousel-inner").prepend('<div class="active item"><img class="itemimage" src="img/interrobang.gif" /> <span class="itemtext">Scorri le dieci domande mediante lo slider e seleziona un candidato per leggerne le risposte complete. Selezionane due per confrontare direttamente le loro posizioni. Esprimi la tua opinione twittando i candidati con l\'hashtag #dibattitoscienza</span></div>');
+                        $(".carousel-inner").prepend('<div class="active item"><img class="itemimage" src="img/interrobang.gif" /> <span class="itemtext">Scorri le dieci domande usando le frecce e seleziona un candidato per leggerne le risposte complete. Selezionane due per confrontare direttamente le loro posizioni. Esprimi la tua opinione twittando i candidati con l\'hashtag #dibattitoscienza</span></div>');
 
                         $(".candidati").render(candidati,dirCandidati);
                         var idCandidato1,
