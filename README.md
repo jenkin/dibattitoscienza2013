@@ -6,3 +6,4 @@ http://www.dibattitoscienza.it/elezioni-2013-le-risposte-dei-politici/.
 
 Qui la versione stand-alone: http://dataninja.it/projects/dibattito_scienza/.
 
+WARNING: _this project is abandoned_.
